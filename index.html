@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
     <title>Sinko · 个人名片</title>
-    <!-- 所有样式与脚本内嵌，无外部依赖 -->
     <style>
-        /* 全局重置 & 字体 */
+        /* ===== 全局重置 & 字体 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -14,9 +13,9 @@
         }
 
         body {
-            background-color: #f8fafc;   /* 极浅灰色，干净柔和 */
+            background-color: #f8fafc;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            color: #1e2a3a;             /* 深灰色，舒适阅读 */
+            color: #1e2a3a;
             line-height: 1.5;
             padding: 0 1.5rem;
             display: flex;
@@ -25,7 +24,6 @@
             min-height: 100vh;
         }
 
-        /* 主容器 – 卡片式简约布局 */
         .page {
             max-width: 820px;
             width: 100%;
@@ -37,7 +35,7 @@
             transition: box-shadow 0.2s ease;
         }
 
-        /* ---------- 顶部导航 ---------- */
+        /* ===== 导航栏 ===== */
         .navbar {
             display: flex;
             justify-content: center;
@@ -57,10 +55,11 @@
             padding: 0.3rem 0.1rem;
             border-bottom: 2px solid transparent;
             transition: border-color 0.2s, color 0.2s;
+            cursor: pointer;
         }
 
         .navbar a:hover {
-            color: #4A90D9;          /* 柔和主色 */
+            color: #4A90D9;
             border-bottom-color: #4A90D9;
         }
 
@@ -68,7 +67,7 @@
             opacity: 0.7;
         }
 
-        /* ---------- 头像区 ---------- */
+        /* ===== 头像区 ===== */
         .profile-head {
             display: flex;
             flex-direction: column;
@@ -96,7 +95,6 @@
             display: block;
         }
 
-        /* 占位图使用在线服务 (UI avatars) 风格干净 */
         .avatar-placeholder {
             font-size: 3.4rem;
             font-weight: 400;
@@ -132,7 +130,7 @@
             letter-spacing: 0.01em;
         }
 
-        /* ---------- 关于我 ---------- */
+        /* ===== 关于我 ===== */
         .about-section {
             margin: 2.2rem 0 1.8rem;
         }
@@ -172,7 +170,7 @@
             font-weight: 600;
         }
 
-        /* ---------- 社交图标 (纯CSS, 使用Unicode/字符+简单样式) ---------- */
+        /* ===== 社交图标 ===== */
         .social-section {
             margin: 2rem 0 1.8rem;
         }
@@ -227,13 +225,10 @@
             display: inline-block;
         }
 
-        /* 自定义社交图标 (使用简单字符/emoji) 无外部库 */
         .icon-github::before { content: "🐙 "; font-size: 1.2rem; }
         .icon-bilibili::before { content: "📺 "; font-size: 1.2rem; }
-        .icon-twitter::before { content: "🐦 "; font-size: 1.2rem; }
-        .icon-wechat::before { content: "💬 "; font-size: 1.2rem; }
 
-        /* ---------- 页脚 ---------- */
+        /* ===== 页脚 ===== */
         .footer {
             margin-top: 1.2rem;
             padding-top: 1.2rem;
@@ -251,84 +246,230 @@
             display: inline-block;
         }
 
-        /* ---------- 响应式适配 ---------- */
+        /* ===== 相册模块 ===== */
+        .album-section {
+            margin: 2rem 0 1.8rem;
+            display: none; /* 默认隐藏，密码正确后显示 */
+        }
+
+        .album-section.active {
+            display: block;
+        }
+
+        .album-section h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1e2a3a;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .album-section h2::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #d0def0, transparent);
+            margin-left: 0.6rem;
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .album-grid .photo {
+            background: #f0f4fa;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #4f637a;
+            border: 2px dashed #d0def0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .album-grid .photo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+
+        .album-grid .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .album-grid .photo .placeholder-text {
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .album-grid .photo .placeholder-text span {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* ===== 密码弹窗 (模态框) ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2rem 2rem 2.2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center;
+            animation: modalFade 0.25s ease;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-box h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #0f1a2b;
+        }
+
+        .modal-box p {
+            color: #4f637a;
+            font-size: 0.95rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .modal-box input[type="password"] {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 2px solid #e6edf5;
+            border-radius: 60px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .modal-box input[type="password"]:focus {
+            border-color: #4A90D9;
+        }
+
+        .modal-box .btn-group {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .modal-box .btn {
+            padding: 0.6rem 2rem;
+            border: none;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .modal-box .btn-primary {
+            background: #4A90D9;
+            color: #fff;
+        }
+
+        .modal-box .btn-primary:hover {
+            background: #3a7bc4;
+        }
+
+        .modal-box .btn-primary:active {
+            transform: scale(0.96);
+        }
+
+        .modal-box .btn-secondary {
+            background: #eef2f6;
+            color: #1e2a3a;
+        }
+
+        .modal-box .btn-secondary:hover {
+            background: #dce3ec;
+        }
+
+        .modal-box .error-msg {
+            color: #d9534f;
+            font-size: 0.85rem;
+            margin: 0.5rem 0 0.8rem;
+            min-height: 1.2rem;
+        }
+
+        /* ===== 响应式 ===== */
         @media (max-width: 550px) {
-            body {
-                padding: 0 1rem;
-            }
-            .page {
-                padding: 1.2rem 1rem 1.6rem;
-                margin: 1.2rem 0;
-                border-radius: 20px;
-            }
-            .navbar {
-                gap: 1.4rem;
-                padding-bottom: 0.8rem;
-            }
-            .navbar a {
-                font-size: 0.95rem;
-            }
-            .avatar {
-                width: 100px;
-                height: 100px;
-            }
-            .nickname {
-                font-size: 2.2rem;
-            }
-            .tagline {
-                font-size: 0.95rem;
-                padding: 0.2rem 1rem;
-            }
-            .about-text {
-                padding: 1rem 1.2rem;
-                font-size: 0.95rem;
-            }
-            .social-icons {
-                gap: 0.8rem 1rem;
-            }
-            .social-icons a {
-                font-size: 0.9rem;
-                padding: 0.35rem 1rem 0.35rem 0.7rem;
-            }
+            body { padding: 0 1rem; }
+            .page { padding: 1.2rem 1rem 1.6rem; margin: 1.2rem 0; border-radius: 20px; }
+            .navbar { gap: 1.4rem; padding-bottom: 0.8rem; }
+            .navbar a { font-size: 0.95rem; }
+            .avatar { width: 100px; height: 100px; }
+            .nickname { font-size: 2.2rem; }
+            .tagline { font-size: 0.95rem; padding: 0.2rem 1rem; }
+            .about-text { padding: 1rem 1.2rem; font-size: 0.95rem; }
+            .social-icons { gap: 0.8rem 1rem; }
+            .social-icons a { font-size: 0.9rem; padding: 0.35rem 1rem 0.35rem 0.7rem; }
+            .album-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .modal-box { padding: 1.5rem; }
         }
 
         @media (max-width: 400px) {
-            .page {
-                padding: 1rem 0.8rem;
-            }
-            .navbar {
-                gap: 1rem;
-            }
-            .nickname {
-                font-size: 1.9rem;
-            }
+            .page { padding: 1rem 0.8rem; }
+            .navbar { gap: 1rem; }
+            .nickname { font-size: 1.9rem; }
+            .album-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
         }
 
-        /* 小点缀 – 平滑滚动 */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* 锚点占位 (用于导航) */
-        .anchor-offset {
-            scroll-margin-top: 1.5rem;
-        }
+        html { scroll-behavior: smooth; }
+        .anchor-offset { scroll-margin-top: 1.5rem; }
     </style>
 </head>
 <body>
 <div class="page" id="top">
 
-    <!-- 导航栏 -->
+    <!-- ===== 导航栏 ===== -->
     <nav class="navbar">
         <a href="#top">首页</a>
         <a href="#about">关于我</a>
         <a href="#contact">联系我</a>
+        <a id="albumNavBtn">📸 相册</a>
     </nav>
 
-    <!-- 个人头像 + 昵称 + 简介 -->
+    <!-- ===== 个人头像 + 昵称 + 简介 ===== -->
     <div class="profile-head">
         <div class="avatar">
-            <!-- 圆形占位图：使用在线占位图服务 (ui-avatars.com) 生成首字母，干净且无需额外请求 -->
             <img 
                 src="https://ui-avatars.com/api/?name=Sinko&size=120&background=4A90D9&color=ffffff&font-size=0.5&bold=true&rounded=true" 
                 alt="Sinko 头像"
@@ -341,50 +482,195 @@
         <div class="tagline">嗨嗨，这里是有趣的 <strong>Sinko</strong> 频道！一起玩耍吧～</div>
     </div>
 
-    <!-- 关于我 -->
+    <!-- ===== 关于我 ===== -->
     <div class="about-section anchor-offset" id="about">
         <h2>📋 关于我</h2>
         <div class="about-text">
             <p>✨ 你好！我是 <strong>Sinko</strong>，一个热爱创造与分享的探索者。<br>
-            对我来说，每一天都是新的冒险。我享受把想法变成现实的过程，无论是写代码、设计小工具，还是和朋友一起折腾有趣的项目。<br>
-            我始终相信 <strong>“保持好奇，保持善良”</strong>，这也是 <strong>Sinko频道</strong> 的初心。很高兴认识你！</p>
+            对我来说，每一天都是新的冒险。我享受把想法变成现实的过程，无论是写代码、设计小工具，还是和好朋友 <strong>Huhusre</strong> 一起折腾有趣的项目。<br>
+            我始终相信 <strong>"保持好奇，保持善良"</strong>，这也是 <strong>Sinko频道</strong> 的初心。很高兴认识你！</p>
             <p style="margin-top: 0.6rem; font-size: 0.95rem; color: #3a5b7c;">
-            📍 目前和好友 <strong>Huhusre</strong> 一起捣鼓各种创意，欢迎来玩。
+            📍 目前和好友 Huhusre 一起捣鼓各种创意，欢迎来玩。
             </p>
         </div>
     </div>
 
-    <!-- 社交图标 (使用纯字符 + 简单样式) -->
+    <!-- ===== 社交图标 ===== -->
     <div class="social-section anchor-offset" id="contact">
         <h3>📬 找到我 · 社交</h3>
         <div class="social-icons">
-            <a href="#" class="icon-github" aria-label="GitHub"><span class="social-icon">🐙</span> GitHub</a>
-            <a href="#" class="icon-bilibili" aria-label="Bilibili"><span class="social-icon">📺</span> B站</a>
-            <a href="#" class="icon-twitter" aria-label="Twitter"><span class="social-icon">🐦</span> Twitter</a>
-            <a href="#" class="icon-wechat" aria-label="WeChat"><span class="social-icon">💬</span> 微信</a>
+            <a href="https://github.com/GHXR1" target="_blank" rel="noopener noreferrer" class="icon-github" aria-label="GitHub"><span class="social-icon">🐙</span> GitHub</a>
+            <a href="https://space.bilibili.com/3494378007955965" target="_blank" rel="noopener noreferrer" class="icon-bilibili" aria-label="Bilibili"><span class="social-icon">📺</span> B站</a>
         </div>
-        <!-- 附加小提示：链接均为占位 # -->
         <div style="font-size: 0.75rem; color: #7a8da0; text-align: center; margin-top: 0.8rem; opacity: 0.7;">
-            <span>✨ 点击图标可跳转 (示例链接)</span>
+            <span>✨ 点击图标可直接访问我的主页</span>
         </div>
     </div>
 
-    <!-- 页脚 · 版权信息 -->
+    <!-- ===== 相册区域 (默认隐藏，密码正确后显示) ===== -->
+    <div class="album-section" id="albumSection">
+        <h2>📸 我的相册</h2>
+        <div class="album-grid" id="albumGrid">
+            <!-- 图片由 JavaScript 动态生成 -->
+        </div>
+    </div>
+
+    <!-- ===== 页脚 ===== -->
     <div class="footer">
         <span>© 2026 Sinko · 保留所有权利</span>
     </div>
-
-    <!-- 额外说明：符合“sinko频道” & 版权归sinko所有 -->
     <div style="text-align: center; font-size: 0.7rem; color: #a0b6cc; margin-top: 0.2rem; letter-spacing: 0.03em;">
         <span>⚡ Sinko Channel · 好友 Huhusre</span>
     </div>
 </div>
 
-<!-- 极少量的JavaScript，用于平滑滚动或占位图备用（极简） -->
+<!-- ===== 密码弹窗 (模态框) ===== -->
+<div class="modal-overlay" id="albumModal">
+    <div class="modal-box">
+        <h3>🔐 相册验证</h3>
+        <p>请输入访问密码以查看相册</p>
+        <input type="password" id="passwordInput" placeholder="请输入密码" autocomplete="off">
+        <div class="error-msg" id="errorMsg"></div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" id="modalCancelBtn">取消</button>
+            <button class="btn btn-primary" id="modalConfirmBtn">确认</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JavaScript -->
 <script>
     (function() {
-        // 纯辅助：为导航链接添加平滑滚动 (如果浏览器支持)
-        const navLinks = document.querySelectorAll('.navbar a');
+        // ---------- DOM 元素 ----------
+        const albumNavBtn = document.getElementById('albumNavBtn');
+        const modal = document.getElementById('albumModal');
+        const passwordInput = document.getElementById('passwordInput');
+        const errorMsg = document.getElementById('errorMsg');
+        const confirmBtn = document.getElementById('modalConfirmBtn');
+        const cancelBtn = document.getElementById('modalCancelBtn');
+        const albumSection = document.getElementById('albumSection');
+        const albumGrid = document.getElementById('albumGrid');
+
+        // 正确的密码
+        const CORRECT_PASSWORD = 'qq7143776';
+
+        // 是否已解锁 (刷新页面后失效)
+        let isUnlocked = false;
+
+        // ---------- 相册图片数据 (使用占位图，你可以替换为真实图片链接) ----------
+        const photos = [
+            { id: 1, url: 'https://picsum.photos/seed/sinko1/400/400', alt: '照片 1' },
+            { id: 2, url: 'https://picsum.photos/seed/sinko2/400/400', alt: '照片 2' },
+            { id: 3, url: 'https://picsum.photos/seed/sinko3/400/400', alt: '照片 3' },
+            { id: 4, url: 'https://picsum.photos/seed/sinko4/400/400', alt: '照片 4' },
+            { id: 5, url: 'https://picsum.photos/seed/sinko5/400/400', alt: '照片 5' },
+            { id: 6, url: 'https://picsum.photos/seed/sinko6/400/400', alt: '照片 6' },
+            { id: 7, url: 'https://picsum.photos/seed/sinko7/400/400', alt: '照片 7' },
+            { id: 8, url: 'https://picsum.photos/seed/sinko8/400/400', alt: '照片 8' },
+        ];
+
+        // ---------- 渲染相册 ----------
+        function renderAlbum() {
+            albumGrid.innerHTML = '';
+            photos.forEach(photo => {
+                const div = document.createElement('div');
+                div.className = 'photo';
+                div.innerHTML = `
+                    <img src="${photo.url}" alt="${photo.alt}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="placeholder-text" style="display:none;">
+                        <span>🖼️</span>
+                        <small>加载失败</small>
+                    </div>
+                `;
+                albumGrid.appendChild(div);
+            });
+        }
+
+        // ---------- 显示相册 (解锁) ----------
+        function unlockAlbum() {
+            isUnlocked = true;
+            albumSection.classList.add('active');
+            renderAlbum();
+            modal.classList.remove('active');
+            passwordInput.value = '';
+            errorMsg.textContent = '';
+            // 滚动到相册位置
+            setTimeout(() => {
+                albumSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 150);
+        }
+
+        // ---------- 显示 "请联系站长" ----------
+        function showContactOwner() {
+            errorMsg.textContent = '❌ 密码错误，请联系站长 (sinko)';
+            passwordInput.value = '';
+            passwordInput.focus();
+            // 同时弹窗提示 (更明显)
+            alert('密码错误，请联系站长 (sinko) 获取访问权限。');
+        }
+
+        // ---------- 处理密码验证 ----------
+        function handleVerify() {
+            const input = passwordInput.value.trim();
+            if (input === '') {
+                errorMsg.textContent = '⚠️ 请输入密码';
+                return;
+            }
+            if (input === CORRECT_PASSWORD) {
+                unlockAlbum();
+            } else {
+                showContactOwner();
+            }
+        }
+
+        // ---------- 打开弹窗 ----------
+        function openModal() {
+            if (isUnlocked) {
+                // 如果已经解锁，直接滚动到相册
+                albumSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            modal.classList.add('active');
+            passwordInput.value = '';
+            errorMsg.textContent = '';
+            setTimeout(() => passwordInput.focus(), 100);
+        }
+
+        // ---------- 关闭弹窗 ----------
+        function closeModal() {
+            modal.classList.remove('active');
+            passwordInput.value = '';
+            errorMsg.textContent = '';
+        }
+
+        // ---------- 事件绑定 ----------
+        // 导航 "相册" 点击
+        albumNavBtn.addEventListener('click', openModal);
+
+        // 确认按钮
+        confirmBtn.addEventListener('click', handleVerify);
+
+        // 取消按钮
+        cancelBtn.addEventListener('click', closeModal);
+
+        // 回车键
+        passwordInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleVerify();
+            }
+        });
+
+        // 点击弹窗外部关闭 (点击背景)
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // 导航栏平滑滚动 (原有功能)
+        const navLinks = document.querySelectorAll('.navbar a[href^="#"]');
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
@@ -398,8 +684,7 @@
             });
         });
 
-        // 如果头像图片加载失败，显示备用占位 (但onerror已处理)
-        // 额外处理：若浏览器不支持onerror，用后备
+        // 头像加载失败备用
         const avatarImg = document.querySelector('.avatar img');
         if (avatarImg) {
             avatarImg.addEventListener('error', function() {
@@ -410,9 +695,10 @@
                 }
             });
         }
+
+        // 预渲染相册占位 (但不会显示，因为 album-section 默认 display:none)
+        // 等解锁后再真正渲染
     })();
 </script>
-
-<!-- 内联样式已经包含所有，确保零外部依赖 -->
 </body>
 </html>
