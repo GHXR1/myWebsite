@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Sinko · 个人名片</title>
+    <!-- 所有样式与脚本内嵌，无外部依赖 -->
+    <style>
+        /* 全局重置 & 字体 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f8fafc;   /* 极浅灰色，干净柔和 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1e2a3a;             /* 深灰色，舒适阅读 */
+            line-height: 1.5;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 主容器 – 卡片式简约布局 */
+        .page {
+            max-width: 820px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 20, 40, 0.02);
+            margin: 2rem 0 1.5rem;
+            padding: 1.8rem 2rem 2.2rem;
+            transition: box-shadow 0.2s ease;
+        }
+
+        /* ---------- 顶部导航 ---------- */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2.4rem;
+            padding: 0.4rem 0 1.2rem 0;
+            border-bottom: 1px solid #eef2f6;
+            flex-wrap: wrap;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #1e2a3a;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+            padding: 0.3rem 0.1rem;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .navbar a:hover {
+            color: #4A90D9;          /* 柔和主色 */
+            border-bottom-color: #4A90D9;
+        }
+
+        .navbar a:active {
+            opacity: 0.7;
+        }
+
+        /* ---------- 头像区 ---------- */
+        .profile-head {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 1.6rem 0 0.8rem;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #e6edf5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 6px 14px rgba(74, 144, 217, 0.08);
+            transition: transform 0.2s;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 占位图使用在线服务 (UI avatars) 风格干净 */
+        .avatar-placeholder {
+            font-size: 3.4rem;
+            font-weight: 400;
+            color: #4A90D9;
+            background: #dce6f2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            letter-spacing: 0.05em;
+        }
+
+        .nickname {
+            font-size: 2.6rem;
+            font-weight: 600;
+            margin-top: 0.8rem;
+            letter-spacing: -0.01em;
+            color: #0f1a2b;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #3a4b5e;
+            margin-top: 0.2rem;
+            background: #f0f5fe;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            display: inline-block;
+            backdrop-filter: blur(2px);
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+
+        /* ---------- 关于我 ---------- */
+        .about-section {
+            margin: 2.2rem 0 1.8rem;
+        }
+
+        .about-section h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1e2a3a;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.01em;
+        }
+
+        .about-section h2::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #d0def0, transparent);
+            margin-left: 0.6rem;
+        }
+
+        .about-text {
+            background: #f9fcff;
+            padding: 1.2rem 1.6rem;
+            border-radius: 18px;
+            border-left: 4px solid #5B8DEF;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #1f2c3f;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.01);
+        }
+
+        .about-text strong {
+            color: #2b4b7a;
+            font-weight: 600;
+        }
+
+        /* ---------- 社交图标 (纯CSS, 使用Unicode/字符+简单样式) ---------- */
+        .social-section {
+            margin: 2rem 0 1.8rem;
+        }
+
+        .social-section h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #2f4057;
+            margin-bottom: 0.9rem;
+            letter-spacing: 0.02em;
+        }
+
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem 1.8rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            text-decoration: none;
+            color: #1e2a3a;
+            font-size: 1rem;
+            background: #f2f7fe;
+            padding: 0.5rem 1.2rem 0.5rem 0.9rem;
+            border-radius: 60px;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+            font-weight: 450;
+            border: 1px solid #eaf0f8;
+        }
+
+        .social-icons a:hover {
+            background: #e3edfa;
+            border-color: #b3cae8;
+            box-shadow: 0 4px 10px rgba(74, 144, 217, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .social-icons a:active {
+            transform: scale(0.96);
+        }
+
+        .social-icons .social-icon {
+            font-size: 1.3rem;
+            line-height: 1;
+            display: inline-block;
+        }
+
+        /* 自定义社交图标 (使用简单字符/emoji) 无外部库 */
+        .icon-github::before { content: "🐙 "; font-size: 1.2rem; }
+        .icon-bilibili::before { content: "📺 "; font-size: 1.2rem; }
+        .icon-twitter::before { content: "🐦 "; font-size: 1.2rem; }
+        .icon-wechat::before { content: "💬 "; font-size: 1.2rem; }
+
+        /* ---------- 页脚 ---------- */
+        .footer {
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #e6edf5;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #4f637a;
+            letter-spacing: 0.02em;
+        }
+
+        .footer span {
+            background: #f2f7fe;
+            padding: 0.2rem 0.9rem;
+            border-radius: 60px;
+            display: inline-block;
+        }
+
+        /* ---------- 响应式适配 ---------- */
+        @media (max-width: 550px) {
+            body {
+                padding: 0 1rem;
+            }
+            .page {
+                padding: 1.2rem 1rem 1.6rem;
+                margin: 1.2rem 0;
+                border-radius: 20px;
+            }
+            .navbar {
+                gap: 1.4rem;
+                padding-bottom: 0.8rem;
+            }
+            .navbar a {
+                font-size: 0.95rem;
+            }
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+            .nickname {
+                font-size: 2.2rem;
+            }
+            .tagline {
+                font-size: 0.95rem;
+                padding: 0.2rem 1rem;
+            }
+            .about-text {
+                padding: 1rem 1.2rem;
+                font-size: 0.95rem;
+            }
+            .social-icons {
+                gap: 0.8rem 1rem;
+            }
+            .social-icons a {
+                font-size: 0.9rem;
+                padding: 0.35rem 1rem 0.35rem 0.7rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .page {
+                padding: 1rem 0.8rem;
+            }
+            .navbar {
+                gap: 1rem;
+            }
+            .nickname {
+                font-size: 1.9rem;
+            }
+        }
+
+        /* 小点缀 – 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* 锚点占位 (用于导航) */
+        .anchor-offset {
+            scroll-margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="page" id="top">
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <a href="#top">首页</a>
+        <a href="#about">关于我</a>
+        <a href="#contact">联系我</a>
+    </nav>
+
+    <!-- 个人头像 + 昵称 + 简介 -->
+    <div class="profile-head">
+        <div class="avatar">
+            <!-- 圆形占位图：使用在线占位图服务 (ui-avatars.com) 生成首字母，干净且无需额外请求 -->
+            <img 
+                src="https://ui-avatars.com/api/?name=Sinko&size=120&background=4A90D9&color=ffffff&font-size=0.5&bold=true&rounded=true" 
+                alt="Sinko 头像"
+                loading="lazy"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            >
+            <div class="avatar-placeholder" style="display:none;">S</div>
+        </div>
+        <div class="nickname">Sinko</div>
+        <div class="tagline">嗨嗨，这里是有趣的 <strong>Sinko</strong> 频道！一起玩耍吧～</div>
+    </div>
+
+    <!-- 关于我 -->
+    <div class="about-section anchor-offset" id="about">
+        <h2>📋 关于我</h2>
+        <div class="about-text">
+            <p>✨ 你好！我是 <strong>Sinko</strong>，一个热爱创造与分享的探索者。<br>
+            对我来说，每一天都是新的冒险。我享受把想法变成现实的过程，无论是写代码、设计小工具，还是和朋友一起折腾有趣的项目。<br>
+            我始终相信 <strong>“保持好奇，保持善良”</strong>，这也是 <strong>Sinko频道</strong> 的初心。很高兴认识你！</p>
+            <p style="margin-top: 0.6rem; font-size: 0.95rem; color: #3a5b7c;">
+            📍 目前和好友 <strong>Huhusre</strong> 一起捣鼓各种创意，欢迎来玩。
+            </p>
+        </div>
+    </div>
+
+    <!-- 社交图标 (使用纯字符 + 简单样式) -->
+    <div class="social-section anchor-offset" id="contact">
+        <h3>📬 找到我 · 社交</h3>
+        <div class="social-icons">
+            <a href="#" class="icon-github" aria-label="GitHub"><span class="social-icon">🐙</span> GitHub</a>
+            <a href="#" class="icon-bilibili" aria-label="Bilibili"><span class="social-icon">📺</span> B站</a>
+            <a href="#" class="icon-twitter" aria-label="Twitter"><span class="social-icon">🐦</span> Twitter</a>
+            <a href="#" class="icon-wechat" aria-label="WeChat"><span class="social-icon">💬</span> 微信</a>
+        </div>
+        <!-- 附加小提示：链接均为占位 # -->
+        <div style="font-size: 0.75rem; color: #7a8da0; text-align: center; margin-top: 0.8rem; opacity: 0.7;">
+            <span>✨ 点击图标可跳转 (示例链接)</span>
+        </div>
+    </div>
+
+    <!-- 页脚 · 版权信息 -->
+    <div class="footer">
+        <span>© 2026 Sinko · 保留所有权利</span>
+    </div>
+
+    <!-- 额外说明：符合“sinko频道” & 版权归sinko所有 -->
+    <div style="text-align: center; font-size: 0.7rem; color: #a0b6cc; margin-top: 0.2rem; letter-spacing: 0.03em;">
+        <span>⚡ Sinko Channel · 好友 Huhusre</span>
+    </div>
+</div>
+
+<!-- 极少量的JavaScript，用于平滑滚动或占位图备用（极简） -->
+<script>
+    (function() {
+        // 纯辅助：为导航链接添加平滑滚动 (如果浏览器支持)
+        const navLinks = document.querySelectorAll('.navbar a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        e.preventDefault();
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+
+        // 如果头像图片加载失败，显示备用占位 (但onerror已处理)
+        // 额外处理：若浏览器不支持onerror，用后备
+        const avatarImg = document.querySelector('.avatar img');
+        if (avatarImg) {
+            avatarImg.addEventListener('error', function() {
+                this.style.display = 'none';
+                const fallback = this.nextElementSibling;
+                if (fallback && fallback.classList.contains('avatar-placeholder')) {
+                    fallback.style.display = 'flex';
+                }
+            });
+        }
+    })();
+</script>
+
+<!-- 内联样式已经包含所有，确保零外部依赖 -->
+</body>
+</html>
