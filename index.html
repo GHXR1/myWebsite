@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Sinko · 个人名片</title>
+    <title>Sinko 导航 · 实用工具箱</title>
     <style>
-        /* ===== 全局重置 & 字体 ===== */
+        /* ========== 全局重置 & 基础 ========== */
         * {
             margin: 0;
             padding: 0;
@@ -13,664 +13,352 @@
         }
 
         body {
-            background-color: #f8fafc;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f6f9fc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #1e2a3a;
             line-height: 1.5;
-            padding: 0 1.5rem;
+            padding: 1.5rem;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
-        .page {
-            max-width: 820px;
+        /* ========== 主容器 ========== */
+        .container {
+            max-width: 1200px;
             width: 100%;
             background: #ffffff;
             border-radius: 28px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 20, 40, 0.02);
-            margin: 2rem 0 1.5rem;
-            padding: 1.8rem 2rem 2.2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), 0 2px 10px rgba(0, 20, 40, 0.02);
+            padding: 2rem 2.2rem 2.5rem;
             transition: box-shadow 0.2s ease;
         }
 
-        /* ===== 导航栏 ===== */
-        .navbar {
+        /* ========== 头部 ========== */
+        .header {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2.4rem;
-            padding: 0.4rem 0 1.2rem 0;
+            flex-direction: column;
+            align-items: flex-start;
             border-bottom: 1px solid #eef2f6;
-            flex-wrap: wrap;
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.8rem;
         }
 
-        .navbar a {
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #0f1a2b;
+        }
+        .header h1 span {
+            color: #4A90D9;
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            color: #4a5e77;
+            margin-top: 0.2rem;
+            font-weight: 400;
+        }
+
+        /* ========== 导航分类锚点（轻量标签） ========== */
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem 1.4rem;
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid #eef2f6;
+        }
+        .category-nav a {
             text-decoration: none;
-            color: #1e2a3a;
+            color: #3a4b5e;
+            font-size: 0.95rem;
             font-weight: 500;
-            font-size: 1rem;
-            letter-spacing: 0.02em;
-            padding: 0.3rem 0.1rem;
+            padding: 0.2rem 0;
             border-bottom: 2px solid transparent;
             transition: border-color 0.2s, color 0.2s;
-            cursor: pointer;
         }
-
-        .navbar a:hover {
+        .category-nav a:hover {
             color: #4A90D9;
             border-bottom-color: #4A90D9;
         }
 
-        .navbar a:active {
-            opacity: 0.7;
+        /* ========== 分类区块 ========== */
+        .category {
+            margin-bottom: 2.4rem;
+        }
+        .category:last-of-type {
+            margin-bottom: 1.2rem;
         }
 
-        /* ===== 头像区 ===== */
-        .profile-head {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 1.6rem 0 0.8rem;
-        }
-
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-color: #e6edf5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 6px 14px rgba(74, 144, 217, 0.08);
-            transition: transform 0.2s;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .avatar-placeholder {
-            font-size: 3.4rem;
-            font-weight: 400;
-            color: #4A90D9;
-            background: #dce6f2;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            letter-spacing: 0.05em;
-        }
-
-        .nickname {
-            font-size: 2.6rem;
-            font-weight: 600;
-            margin-top: 0.8rem;
-            letter-spacing: -0.01em;
-            color: #0f1a2b;
-        }
-
-        .tagline {
-            font-size: 1.1rem;
-            color: #3a4b5e;
-            margin-top: 0.2rem;
-            background: #f0f5fe;
-            padding: 0.3rem 1.2rem;
-            border-radius: 60px;
-            display: inline-block;
-            backdrop-filter: blur(2px);
-            font-weight: 400;
-            letter-spacing: 0.01em;
-        }
-
-        /* ===== 关于我 ===== */
-        .about-section {
-            margin: 2.2rem 0 1.8rem;
-        }
-
-        .about-section h2 {
+        .category-title {
             font-size: 1.4rem;
             font-weight: 600;
             color: #1e2a3a;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.8rem;
-            letter-spacing: -0.01em;
-        }
-
-        .about-section h2::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, #d0def0, transparent);
-            margin-left: 0.6rem;
-        }
-
-        .about-text {
-            background: #f9fcff;
-            padding: 1.2rem 1.6rem;
-            border-radius: 18px;
-            border-left: 4px solid #5B8DEF;
-            font-size: 1rem;
-            line-height: 1.7;
-            color: #1f2c3f;
-            box-shadow: inset 0 1px 4px rgba(0,0,0,0.01);
-        }
-
-        .about-text strong {
-            color: #2b4b7a;
-            font-weight: 600;
-        }
-
-        /* ===== 社交图标 ===== */
-        .social-section {
-            margin: 2rem 0 1.8rem;
-        }
-
-        .social-section h3 {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #2f4057;
+            gap: 0.6rem;
             margin-bottom: 0.9rem;
-            letter-spacing: 0.02em;
+        }
+        .category-title .badge {
+            font-size: 0.7rem;
+            font-weight: 400;
+            background: #eef4fa;
+            color: #4a6a8a;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            margin-left: 0.2rem;
         }
 
-        .social-icons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem 1.8rem;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-icons a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            text-decoration: none;
-            color: #1e2a3a;
-            font-size: 1rem;
-            background: #f2f7fe;
-            padding: 0.5rem 1.2rem 0.5rem 0.9rem;
-            border-radius: 60px;
-            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
-            font-weight: 450;
-            border: 1px solid #eaf0f8;
-        }
-
-        .social-icons a:hover {
-            background: #e3edfa;
-            border-color: #b3cae8;
-            box-shadow: 0 4px 10px rgba(74, 144, 217, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .social-icons a:active {
-            transform: scale(0.96);
-        }
-
-        .social-icons .social-icon {
-            font-size: 1.3rem;
-            line-height: 1;
-            display: inline-block;
-        }
-
-        .icon-github::before { content: "🐙 "; font-size: 1.2rem; }
-        .icon-bilibili::before { content: "📺 "; font-size: 1.2rem; }
-
-        /* ===== 页脚 ===== */
-        .footer {
-            margin-top: 1.2rem;
-            padding-top: 1.2rem;
-            border-top: 1px solid #e6edf5;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #4f637a;
-            letter-spacing: 0.02em;
-        }
-
-        .footer span {
-            background: #f2f7fe;
-            padding: 0.2rem 0.9rem;
-            border-radius: 60px;
-            display: inline-block;
-        }
-
-        /* ===== 相册模块 ===== */
-        .album-section {
-            margin: 2rem 0 1.8rem;
-            display: none; /* 默认隐藏，密码正确后显示 */
-        }
-
-        .album-section.active {
-            display: block;
-        }
-
-        .album-section h2 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #1e2a3a;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            letter-spacing: -0.01em;
-        }
-
-        .album-section h2::after {
-            content: '';
-            flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, #d0def0, transparent);
-            margin-left: 0.6rem;
-        }
-
-        .album-grid {
+        /* ========== 卡片网格 ========== */
+        .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
+            gap: 0.9rem;
         }
 
-        .album-grid .photo {
-            background: #f0f4fa;
-            border-radius: 16px;
-            overflow: hidden;
-            aspect-ratio: 1 / 1;
+        .card {
+            background: #f9fcff;
+            border: 1px solid #eaf0f8;
+            border-radius: 14px;
+            padding: 0.8rem 1rem 0.9rem;
+            transition: background 0.15s, border-color 0.15s, transform 0.1s, box-shadow 0.15s;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            color: #4f637a;
-            border: 2px dashed #d0def0;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
+            flex-direction: column;
+        }
+        .card:hover {
+            background: #f2f7fe;
+            border-color: #c8daf0;
+            box-shadow: 0 4px 12px rgba(74, 144, 217, 0.06);
+            transform: translateY(-2px);
+        }
+        .card:active {
+            transform: scale(0.98);
         }
 
-        .album-grid .photo:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        }
-
-        .album-grid .photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .album-grid .photo .placeholder-text {
-            text-align: center;
-            padding: 0.5rem;
-        }
-
-        .album-grid .photo .placeholder-text span {
-            display: block;
-            font-size: 2.5rem;
-            margin-bottom: 0.3rem;
-        }
-
-        /* ===== 密码弹窗 (模态框) ===== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.45);
-            backdrop-filter: blur(4px);
-            z-index: 999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-box {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 2rem 2rem 2.2rem;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            text-align: center;
-            animation: modalFade 0.25s ease;
-        }
-
-        @keyframes modalFade {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        .modal-box h3 {
-            font-size: 1.4rem;
+        .card .name {
             font-weight: 600;
-            margin-bottom: 0.3rem;
-            color: #0f1a2b;
-        }
-
-        .modal-box p {
-            color: #4f637a;
             font-size: 0.95rem;
-            margin-bottom: 1.4rem;
-        }
-
-        .modal-box input[type="password"] {
-            width: 100%;
-            padding: 0.7rem 1rem;
-            border: 2px solid #e6edf5;
-            border-radius: 60px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .modal-box input[type="password"]:focus {
-            border-color: #4A90D9;
-        }
-
-        .modal-box .btn-group {
+            color: #0f1a2b;
             display: flex;
-            gap: 0.8rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.3rem;
         }
-
-        .modal-box .btn {
-            padding: 0.6rem 2rem;
-            border: none;
-            border-radius: 60px;
+        .card .name a {
+            text-decoration: none;
+            color: #0f1a2b;
+            transition: color 0.15s;
+        }
+        .card .name a:hover {
+            color: #4A90D9;
+        }
+        .card .name .ext-icon {
             font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
+            opacity: 0.6;
         }
 
-        .modal-box .btn-primary {
+        .card .desc {
+            font-size: 0.8rem;
+            color: #5a6f88;
+            margin-top: 0.25rem;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .card .link-btn {
+            margin-top: 0.5rem;
+            align-self: flex-start;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #4A90D9;
+            background: transparent;
+            border: 1px solid #d0def0;
+            border-radius: 40px;
+            padding: 0.15rem 0.8rem;
+            text-decoration: none;
+            transition: background 0.15s, border-color 0.15s, color 0.15s;
+        }
+        .card .link-btn:hover {
             background: #4A90D9;
+            border-color: #4A90D9;
             color: #fff;
         }
 
-        .modal-box .btn-primary:hover {
-            background: #3a7bc4;
-        }
-
-        .modal-box .btn-primary:active {
-            transform: scale(0.96);
-        }
-
-        .modal-box .btn-secondary {
-            background: #eef2f6;
-            color: #1e2a3a;
-        }
-
-        .modal-box .btn-secondary:hover {
-            background: #dce3ec;
-        }
-
-        .modal-box .error-msg {
-            color: #d9534f;
+        /* ========== 页脚 ========== */
+        .footer {
+            margin-top: 1.6rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #e6edf5;
+            text-align: center;
             font-size: 0.85rem;
-            margin: 0.5rem 0 0.8rem;
-            min-height: 1.2rem;
+            color: #6a7f98;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1.8rem;
+        }
+        .footer span {
+            background: #f2f7fe;
+            padding: 0.2rem 1rem;
+            border-radius: 60px;
+            display: inline-block;
         }
 
-        /* ===== 响应式 ===== */
-        @media (max-width: 550px) {
-            body { padding: 0 1rem; }
-            .page { padding: 1.2rem 1rem 1.6rem; margin: 1.2rem 0; border-radius: 20px; }
-            .navbar { gap: 1.4rem; padding-bottom: 0.8rem; }
-            .navbar a { font-size: 0.95rem; }
-            .avatar { width: 100px; height: 100px; }
-            .nickname { font-size: 2.2rem; }
-            .tagline { font-size: 0.95rem; padding: 0.2rem 1rem; }
-            .about-text { padding: 1rem 1.2rem; font-size: 0.95rem; }
-            .social-icons { gap: 0.8rem 1rem; }
-            .social-icons a { font-size: 0.9rem; padding: 0.35rem 1rem 0.35rem 0.7rem; }
-            .album-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-            .modal-box { padding: 1.5rem; }
+        /* ========== 响应式 ========== */
+        @media (max-width: 720px) {
+            body { padding: 1rem; }
+            .container { padding: 1.2rem 1rem 1.6rem; border-radius: 20px; }
+            .header h1 { font-size: 1.7rem; }
+            .header p { font-size: 0.95rem; }
+            .category-title { font-size: 1.2rem; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.7rem; }
+            .card { padding: 0.6rem 0.8rem 0.8rem; }
+            .card .name { font-size: 0.9rem; }
         }
 
-        @media (max-width: 400px) {
-            .page { padding: 1rem 0.8rem; }
-            .navbar { gap: 1rem; }
-            .nickname { font-size: 1.9rem; }
-            .album-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+        @media (max-width: 440px) {
+            .grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+            .category-nav { gap: 0.4rem 1rem; }
+            .category-nav a { font-size: 0.85rem; }
         }
 
+        /* 小屏手机单列 */
+        @media (max-width: 360px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        /* 平滑滚动 */
         html { scroll-behavior: smooth; }
-        .anchor-offset { scroll-margin-top: 1.5rem; }
+        .anchor-offset { scroll-margin-top: 1.2rem; }
     </style>
 </head>
 <body>
-<div class="page" id="top">
+<div class="container">
 
-    <!-- ===== 导航栏 ===== -->
-    <nav class="navbar">
-        <a href="#top">首页</a>
-        <a href="#about">关于我</a>
-        <a href="#contact">联系我</a>
-        <a id="albumNavBtn">📸 相册</a>
+    <!-- ===== 头部 ===== -->
+    <header class="header">
+        <h1>Sinko <span>·</span> 导航</h1>
+        <p>📌 精选实用网址 · 覆盖计算 · 办公 · 生活 · 模拟 · 开发 · 学习</p>
+    </header>
+
+    <!-- ===== 分类快速导航（锚点） ===== -->
+    <nav class="category-nav">
+        <a href="#calc">🧮 计算工具</a>
+        <a href="#office">📄 办公效率</a>
+        <a href="#life">🏠 生活服务</a>
+        <a href="#sim">🎮 模拟创意</a>
+        <a href="#dev">💻 开发设计</a>
+        <a href="#learn">📚 学习百科</a>
     </nav>
 
-    <!-- ===== 个人头像 + 昵称 + 简介 ===== -->
-    <div class="profile-head">
-        <div class="avatar">
-            <img 
-                src="https://ui-avatars.com/api/?name=Sinko&size=120&background=4A90D9&color=ffffff&font-size=0.5&bold=true&rounded=true" 
-                alt="Sinko 头像"
-                loading="lazy"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-            >
-            <div class="avatar-placeholder" style="display:none;">S</div>
+    <!-- ========================================================= -->
+    <!-- 1. 计算工具 -->
+    <section class="category anchor-offset" id="calc">
+        <div class="category-title">🧮 计算工具 <span class="badge">10</span></div>
+        <div class="grid">
+            <div class="card"><div class="name"><a href="https://mathdf.com" target="_blank" rel="noopener">mathdf.com</a></div><div class="desc">数学公式 / 函数计算器</div><a href="https://mathdf.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.desmos.com/calculator" target="_blank" rel="noopener">Desmos</a></div><div class="desc">图形计算器 · 函数可视化</div><a href="https://www.desmos.com/calculator" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.wolframalpha.com" target="_blank" rel="noopener">WolframAlpha</a></div><div class="desc">知识引擎 / 数学 / 统计</div><a href="https://www.wolframalpha.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.geogebra.org" target="_blank" rel="noopener">GeoGebra</a></div><div class="desc">几何 · 代数 · 微积分</div><a href="https://www.geogebra.org" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.convertworld.com/zh-hans/" target="_blank" rel="noopener">Convertworld</a></div><div class="desc">万能单位换算</div><a href="https://www.convertworld.com/zh-hans/" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.fangdaijisuanqi.com" target="_blank" rel="noopener">房贷计算器</a></div><div class="desc">贷款 · 利率 · 月供</div><a href="https://www.fangdaijisuanqi.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.bmi-calculator.net" target="_blank" rel="noopener">BMI 计算器</a></div><div class="desc">身高体重指数</div><a href="https://www.bmi-calculator.net" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.timeanddate.com" target="_blank" rel="noopener">TimeAndDate</a></div><div class="desc">时区 · 日期差 · 日历</div><a href="https://www.timeanddate.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.binaryhexconverter.com" target="_blank" rel="noopener">进制转换</a></div><div class="desc">二进制 / 十六进制</div><a href="https://www.binaryhexconverter.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.random.org" target="_blank" rel="noopener">Random.org</a></div><div class="desc">真随机数生成</div><a href="https://www.random.org" target="_blank" rel="noopener" class="link-btn">访问</a></div>
         </div>
-        <div class="nickname">Sinko</div>
-        <div class="tagline">嗨嗨，这里是有趣的 <strong>Sinko</strong> 频道！一起玩耍吧～</div>
-    </div>
+    </section>
 
-    <!-- ===== 关于我 ===== -->
-    <div class="about-section anchor-offset" id="about">
-        <h2>📋 关于我</h2>
-        <div class="about-text">
-            <p>✨ 你好！我是 <strong>Sinko</strong>，一个热爱创造与分享的探索者。<br>
-            对我来说，每一天都是新的冒险。我享受把想法变成现实的过程，无论是写代码、设计小工具，还是和好朋友 <strong>Huhusre</strong> 一起折腾有趣的项目。<br>
-            我始终相信 <strong>"保持好奇，保持善良"</strong>，这也是 <strong>Sinko频道</strong> 的初心。很高兴认识你！</p>
-            <p style="margin-top: 0.6rem; font-size: 0.95rem; color: #3a5b7c;">
-            📍 目前和好友 Huhusre 一起捣鼓各种创意，欢迎来玩。
-            </p>
+    <!-- ========================================================= -->
+    <!-- 2. 办公效率 -->
+    <section class="category anchor-offset" id="office">
+        <div class="category-title">📄 办公效率 <span class="badge">8</span></div>
+        <div class="grid">
+            <div class="card"><div class="name"><a href="https://www.ilovepdf.com" target="_blank" rel="noopener">iLovePDF</a></div><div class="desc">PDF 合并 / 转换 / 压缩</div><a href="https://www.ilovepdf.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.canva.com" target="_blank" rel="noopener">Canva</a></div><div class="desc">在线设计 / 演示文稿</div><a href="https://www.canva.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.processon.com" target="_blank" rel="noopener">ProcessOn</a></div><div class="desc">流程图 · 思维导图</div><a href="https://www.processon.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://docs.qq.com" target="_blank" rel="noopener">腾讯文档</a></div><div class="desc">在线协作文档</div><a href="https://docs.qq.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://shimo.im" target="_blank" rel="noopener">石墨文档</a></div><div class="desc">轻量级云文档</div><a href="https://shimo.im" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://smallpdf.com" target="_blank" rel="noopener">SmallPDF</a></div><div class="desc">PDF 压缩 / 编辑</div><a href="https://smallpdf.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.remove.bg" target="_blank" rel="noopener">Remove.bg</a></div><div class="desc">一键抠图 · 去背景</div><a href="https://www.remove.bg" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://cli.im" target="_blank" rel="noopener">草料二维码</a></div><div class="desc">二维码生成器</div><a href="https://cli.im" target="_blank" rel="noopener" class="link-btn">访问</a></div>
         </div>
-    </div>
+    </section>
 
-    <!-- ===== 社交图标 ===== -->
-    <div class="social-section anchor-offset" id="contact">
-        <h3>📬 找到我 · 社交</h3>
-        <div class="social-icons">
-            <a href="https://github.com/GHXR1" target="_blank" rel="noopener noreferrer" class="icon-github" aria-label="GitHub"><span class="social-icon">🐙</span> GitHub</a>
-            <a href="https://space.bilibili.com/3494378007955965" target="_blank" rel="noopener noreferrer" class="icon-bilibili" aria-label="Bilibili"><span class="social-icon">📺</span> B站</a>
+    <!-- ========================================================= -->
+    <!-- 3. 生活服务 -->
+    <section class="category anchor-offset" id="life">
+        <div class="category-title">🏠 生活服务 <span class="badge">8</span></div>
+        <div class="grid">
+            <div class="card"><div class="name"><a href="https://map.baidu.com" target="_blank" rel="noopener">百度地图</a></div><div class="desc">地图 · 导航 · 周边</div><a href="https://map.baidu.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.amap.com" target="_blank" rel="noopener">高德地图</a></div><div class="desc">地图 · 导航 · 出行</div><a href="https://www.amap.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://translate.google.com" target="_blank" rel="noopener">Google 翻译</a></div><div class="desc">多语言翻译</div><a href="https://translate.google.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.deepl.com/translator" target="_blank" rel="noopener">DeepL 翻译</a></div><div class="desc">AI 精准翻译</div><a href="https://www.deepl.com/translator" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.kuaidi100.com" target="_blank" rel="noopener">快递100</a></div><div class="desc">快递单号查询</div><a href="https://www.kuaidi100.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="http://www.weather.com.cn" target="_blank" rel="noopener">中国天气网</a></div><div class="desc">天气预报 · 实况</div><a href="http://www.weather.com.cn" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://movie.douban.com" target="_blank" rel="noopener">豆瓣电影</a></div><div class="desc">电影 · 书评 · 榜单</div><a href="https://movie.douban.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://maoyan.com" target="_blank" rel="noopener">猫眼电影</a></div><div class="desc">购票 · 影讯 · 评分</div><a href="https://maoyan.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
         </div>
-        <div style="font-size: 0.75rem; color: #7a8da0; text-align: center; margin-top: 0.8rem; opacity: 0.7;">
-            <span>✨ 点击图标可直接访问我的主页</span>
-        </div>
-    </div>
+    </section>
 
-    <!-- ===== 相册区域 (默认隐藏，密码正确后显示) ===== -->
-    <div class="album-section" id="albumSection">
-        <h2>📸 我的相册</h2>
-        <div class="album-grid" id="albumGrid">
-            <!-- 图片由 JavaScript 动态生成 -->
+    <!-- ========================================================= -->
+    <!-- 4. 模拟创意 -->
+    <section class="category anchor-offset" id="sim">
+        <div class="category-title">🎮 模拟创意 <span class="badge">6</span></div>
+        <div class="grid">
+            <div class="card"><div class="name"><a href="https://www.onlinepianist.com" target="_blank" rel="noopener">在线钢琴</a></div><div class="desc">虚拟钢琴 · 即兴弹奏</div><a href="https://www.onlinepianist.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://littlealchemy2.com" target="_blank" rel="noopener">Little Alchemy 2</a></div><div class="desc">元素合成 · 创意游戏</div><a href="https://littlealchemy2.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://paveldogreat.github.io/WebGL-Fluid-Simulation/" target="_blank" rel="noopener">流体模拟</a></div><div class="desc">WebGL 流体互动</div><a href="https://paveldogreat.github.io/WebGL-Fluid-Simulation/" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://codepen.io/jordyvd/post/spider-man-web-swing" target="_blank" rel="noopener">蜘蛛侠蛛丝</a></div><div class="desc">蛛丝摆荡模拟</div><a href="https://codepen.io/jordyvd/post/spider-man-web-swing" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.beatbox.com" target="_blank" rel="noopener">Beatbox</a></div><div class="desc">在线节奏 · 音乐生成</div><a href="https://www.beatbox.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.solarsystemscope.com" target="_blank" rel="noopener">太阳系模拟</a></div><div class="desc">3D 太阳系互动</div><a href="https://www.solarsystemscope.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
         </div>
-    </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 5. 开发设计 -->
+    <section class="category anchor-offset" id="dev">
+        <div class="category-title">💻 开发设计 <span class="badge">6</span></div>
+        <div class="grid">
+            <div class="card"><div class="name"><a href="https://coolors.co" target="_blank" rel="noopener">Coolors</a></div><div class="desc">配色方案 · 调色板</div><a href="https://coolors.co" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://fontawesome.com" target="_blank" rel="noopener">Font Awesome</a></div><div class="desc">图标库 · 矢量图标</div><a href="https://fontawesome.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://codepen.io" target="_blank" rel="noopener">CodePen</a></div><div class="desc">前端代码测试 · 展示</div><a href="https://codepen.io" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.bejson.com" target="_blank" rel="noopener">BeJSON</a></div><div class="desc">JSON 格式化 / 校验</div><a href="https://www.bejson.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://carbon.now.sh" target="_blank" rel="noopener">Carbon</a></div><div class="desc">代码截图 · 美化</div><a href="https://carbon.now.sh" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://uptimerobot.com" target="_blank" rel="noopener">UptimeRobot</a></div><div class="desc">网站监控 · 可用性</div><a href="https://uptimerobot.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+        </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- 6. 学习百科 -->
+    <section class="category anchor-offset" id="learn">
+        <div class="category-title">📚 学习百科 <span class="badge">5</span></div>
+        <div class="grid">
+            <div class="card"><div class="name"><a href="https://zh.wikipedia.org" target="_blank" rel="noopener">维基百科</a></div><div class="desc">自由百科全书</div><a href="https://zh.wikipedia.org" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://baike.baidu.com" target="_blank" rel="noopener">百度百科</a></div><div class="desc">中文百科全书</div><a href="https://baike.baidu.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.bilibili.com/v/knowledge" target="_blank" rel="noopener">B站知识区</a></div><div class="desc">公开课 · 知识科普</div><a href="https://www.bilibili.com/v/knowledge" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.icourse163.org" target="_blank" rel="noopener">中国大学MOOC</a></div><div class="desc">免费大学课程</div><a href="https://www.icourse163.org" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+            <div class="card"><div class="name"><a href="https://www.jiumodiary.com" target="_blank" rel="noopener">鸠摩搜书</a></div><div class="desc">电子书搜索</div><a href="https://www.jiumodiary.com" target="_blank" rel="noopener" class="link-btn">访问</a></div>
+        </div>
+    </section>
 
     <!-- ===== 页脚 ===== -->
-    <div class="footer">
-        <span>© 2026 Sinko · 保留所有权利</span>
-    </div>
-    <div style="text-align: center; font-size: 0.7rem; color: #a0b6cc; margin-top: 0.2rem; letter-spacing: 0.03em;">
-        <span>⚡ Sinko Channel · 好友 Huhusre</span>
-    </div>
-</div>
+    <footer class="footer">
+        <span>© 2026 Sinko · 导航站</span>
+        <span>📬 收录建议 · 持续更新</span>
+        <span>⚡ 极简 · 实用 · 便捷</span>
+    </footer>
 
-<!-- ===== 密码弹窗 (模态框) ===== -->
-<div class="modal-overlay" id="albumModal">
-    <div class="modal-box">
-        <h3>🔐 相册验证</h3>
-        <p>请输入访问密码以查看相册</p>
-        <input type="password" id="passwordInput" placeholder="请输入密码" autocomplete="off">
-        <div class="error-msg" id="errorMsg"></div>
-        <div class="btn-group">
-            <button class="btn btn-secondary" id="modalCancelBtn">取消</button>
-            <button class="btn btn-primary" id="modalConfirmBtn">确认</button>
-        </div>
-    </div>
 </div>
+<!-- container end -->
 
-<!-- ============================================================ -->
-<!-- JavaScript -->
+<!-- ========== 极简 JavaScript（平滑滚动增强） ========== -->
 <script>
     (function() {
-        // ---------- DOM 元素 ----------
-        const albumNavBtn = document.getElementById('albumNavBtn');
-        const modal = document.getElementById('albumModal');
-        const passwordInput = document.getElementById('passwordInput');
-        const errorMsg = document.getElementById('errorMsg');
-        const confirmBtn = document.getElementById('modalConfirmBtn');
-        const cancelBtn = document.getElementById('modalCancelBtn');
-        const albumSection = document.getElementById('albumSection');
-        const albumGrid = document.getElementById('albumGrid');
-
-        // 正确的密码
-        const CORRECT_PASSWORD = 'qq7143776';
-
-        // 是否已解锁 (刷新页面后失效)
-        let isUnlocked = false;
-
-        // ---------- 相册图片数据 (使用占位图，你可以替换为真实图片链接) ----------
-        const photos = [
-            { id: 1, url: 'https://picsum.photos/seed/sinko1/400/400', alt: '照片 1' },
-            { id: 2, url: 'https://picsum.photos/seed/sinko2/400/400', alt: '照片 2' },
-            { id: 3, url: 'https://picsum.photos/seed/sinko3/400/400', alt: '照片 3' },
-            { id: 4, url: 'https://picsum.photos/seed/sinko4/400/400', alt: '照片 4' },
-            { id: 5, url: 'https://picsum.photos/seed/sinko5/400/400', alt: '照片 5' },
-            { id: 6, url: 'https://picsum.photos/seed/sinko6/400/400', alt: '照片 6' },
-            { id: 7, url: 'https://picsum.photos/seed/sinko7/400/400', alt: '照片 7' },
-            { id: 8, url: 'https://picsum.photos/seed/sinko8/400/400', alt: '照片 8' },
-        ];
-
-        // ---------- 渲染相册 ----------
-        function renderAlbum() {
-            albumGrid.innerHTML = '';
-            photos.forEach(photo => {
-                const div = document.createElement('div');
-                div.className = 'photo';
-                div.innerHTML = `
-                    <img src="${photo.url}" alt="${photo.alt}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="placeholder-text" style="display:none;">
-                        <span>🖼️</span>
-                        <small>加载失败</small>
-                    </div>
-                `;
-                albumGrid.appendChild(div);
-            });
-        }
-
-        // ---------- 显示相册 (解锁) ----------
-        function unlockAlbum() {
-            isUnlocked = true;
-            albumSection.classList.add('active');
-            renderAlbum();
-            modal.classList.remove('active');
-            passwordInput.value = '';
-            errorMsg.textContent = '';
-            // 滚动到相册位置
-            setTimeout(() => {
-                albumSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 150);
-        }
-
-        // ---------- 显示 "请联系站长" ----------
-        function showContactOwner() {
-            errorMsg.textContent = '❌ 密码错误，请联系站长 (sinko)';
-            passwordInput.value = '';
-            passwordInput.focus();
-            // 同时弹窗提示 (更明显)
-            alert('密码错误，请联系站长 (sinko) 获取访问权限。');
-        }
-
-        // ---------- 处理密码验证 ----------
-        function handleVerify() {
-            const input = passwordInput.value.trim();
-            if (input === '') {
-                errorMsg.textContent = '⚠️ 请输入密码';
-                return;
-            }
-            if (input === CORRECT_PASSWORD) {
-                unlockAlbum();
-            } else {
-                showContactOwner();
-            }
-        }
-
-        // ---------- 打开弹窗 ----------
-        function openModal() {
-            if (isUnlocked) {
-                // 如果已经解锁，直接滚动到相册
-                albumSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                return;
-            }
-            modal.classList.add('active');
-            passwordInput.value = '';
-            errorMsg.textContent = '';
-            setTimeout(() => passwordInput.focus(), 100);
-        }
-
-        // ---------- 关闭弹窗 ----------
-        function closeModal() {
-            modal.classList.remove('active');
-            passwordInput.value = '';
-            errorMsg.textContent = '';
-        }
-
-        // ---------- 事件绑定 ----------
-        // 导航 "相册" 点击
-        albumNavBtn.addEventListener('click', openModal);
-
-        // 确认按钮
-        confirmBtn.addEventListener('click', handleVerify);
-
-        // 取消按钮
-        cancelBtn.addEventListener('click', closeModal);
-
-        // 回车键
-        passwordInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleVerify();
-            }
-        });
-
-        // 点击弹窗外部关闭 (点击背景)
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        // 导航栏平滑滚动 (原有功能)
-        const navLinks = document.querySelectorAll('.navbar a[href^="#"]');
+        // 为分类导航锚点添加平滑滚动（备用，浏览器原生支持 scroll-behavior）
+        const navLinks = document.querySelectorAll('.category-nav a');
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
@@ -683,21 +371,6 @@
                 }
             });
         });
-
-        // 头像加载失败备用
-        const avatarImg = document.querySelector('.avatar img');
-        if (avatarImg) {
-            avatarImg.addEventListener('error', function() {
-                this.style.display = 'none';
-                const fallback = this.nextElementSibling;
-                if (fallback && fallback.classList.contains('avatar-placeholder')) {
-                    fallback.style.display = 'flex';
-                }
-            });
-        }
-
-        // 预渲染相册占位 (但不会显示，因为 album-section 默认 display:none)
-        // 等解锁后再真正渲染
     })();
 </script>
 </body>
