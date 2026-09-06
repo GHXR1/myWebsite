@@ -22,6 +22,7 @@
 ## 🔗 在线访问
 
 [https://GHXR1.github.io/myWebsite/](https://GHXR1.github.io/myWebsite/)
+[https://sinko-f3s.pages.dev/#](https://sinko-f3s.pages.dev/#)
 
 ## 📬 联系
 
